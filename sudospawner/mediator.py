@@ -85,6 +85,10 @@ def spawn(singleuser, args, env):
     and prohibit PYTHONPATH from env for basic protections.
     """
     cmd = [singleuser] + args
+
+    if env.get('USER') == 'root':
+        cmd.append('--allow-root')
+
     cmd_s = ' '.join(pipes.quote(s) for s in cmd)
     app_log.info("Spawning %s", cmd_s)
     if 'PYTHONPATH' in env:
